@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Employee Management{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Employee Management</h1>
+        <button class="button-link">
+        <a href="{{ url_for('employee_management.add_employee_form') }}" class="btn btn-primary">
+            + Add Employee
+        </a>
+        </button>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ 'danger' if category == 'error' else 'success' }} alert-dismissible fade show">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert">
+                        <span>&times;</span>
+                    </button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>SSN</th>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Salary</th>
+                    <th>Department</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for emp in employees %}
+                <tr>
+                    <td>{{ emp[0] }}</td>
+                    <td>{{ emp[1] }} {% if emp[2] %}{{ emp[2] }}. {% endif %}{{ emp[3] }}</td>
+                    <td>{{ emp[4] }}</td>
+                    <td>${{ "%.2f"|format(emp[5]) }}</td>
+                    <td>{{ emp[6] }}</td>
+                    <td>
+                        <button class="button-link">
+                        <a href="{{ url_for('employee_management.edit_employee_form', ssn=emp[0]) }}" 
+                           class="btn btn-sm btn-outline-primary">Edit</a>
+                        </button>
+                        <form method="POST" 
+                              action="{{ url_for('employee_management.delete_employee', ssn=emp[0]) }}" 
+                              class="d-inline"
+                              onsubmit="return confirm('Are you sure you want to delete this employee?');">
+                            <button class="delete" type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6" class="text-center">No employees found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

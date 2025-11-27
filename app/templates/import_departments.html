@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %}Import Departments{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <h1>Import Departments from Excel</h1>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ 'danger' if category == 'error' else 'success' }} alert-dismissible fade show">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert">
+                                <span>&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Upload Excel File</h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ url_for('managers.import_departments') }}" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="file">Select Excel File (.xlsx)</label>
+                            <input type="file" class="form-control-file" id="file" name="file" accept=".xlsx" required>
+                            <small class="form-text text-muted">
+                                Only .xlsx files are supported.
+                            </small>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Import Departments</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Excel File Format</h5>
+                </div>
+                <div class="card-body">
+                    <p>Your Excel file should have the following columns <strong>with headers in the first row</strong>:</p>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Column 1</th>
+                                <th>Column 2</th>
+                                <th>Column 3</th>
+                            </tr>
+                            <tr>
+                                <th><strong>Department Number</strong> (required)</th>
+                                <th><strong>Department Name</strong> (required)</th>
+                                <th><strong>Manager SSN</strong> (optional)</th>
+                            </tr>
+                        </thead>
+                    </table>
+                    
+                    <p><strong>Example with headers:</strong></p>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Department Number</th>
+                                <th>Department Name</th>
+                                <th>Manager SSN</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>10</td>
+                                <td>Quality Assurance</td>
+                                <td>333445555</td>
+                            </tr>
+                            <tr>
+                                <td>11</td>
+                                <td>Customer Support</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="alert alert-info">
+                        <strong>Note:</strong> The first row should contain column headers. Data import starts from row 2.
+                    </div>
+                    
+                    <p class="text-muted">
+                        <strong>Validation rules:</strong> Department numbers must be unique. Manager SSN must exist in the employee table.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

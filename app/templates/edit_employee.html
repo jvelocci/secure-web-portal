@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Employee{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <h1>Edit Employee</h1>
+            
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ 'danger' if category == 'error' else 'success' }} alert-dismissible fade show">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert">
+                                <span>&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST" action="{{ url_for('employee_management.edit_employee', ssn=employee[0]) }}">
+                <div class="form-group">
+                    <label for="ssn">SSN</label>
+                    <input type="text" class="form-control" id="ssn" value="{{ employee[0] }}" readonly>
+                    <small class="form-text text-muted">SSN cannot be changed</small>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="fname">First Name</label>
+                        <input type="text" class="form-control" id="fname" value="{{ employee[1] }}" readonly>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="minit">Middle Initial</label>
+                        <input type="text" class="form-control" id="minit" value="{{ employee[2] }}" readonly>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="lname">Last Name</label>
+                        <input type="text" class="form-control" id="lname" value="{{ employee[3] }}" readonly>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Address *</label>
+                    <input type="text" class="form-control" id="address" name="address" 
+                           value="{{ employee[4] }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="salary">Salary *</label>
+                    <input type="number" class="form-control" id="salary" name="salary" 
+                           value="{{ employee[5] }}" min="0" step="0.01" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="dno">Department *</label>
+                    <select class="form-control" id="dno" name="dno" required>
+                        <option value="">Select a department...</option>
+                        {% for dept in departments %}
+                        <option value="{{ dept[0] }}" 
+                                {% if dept[0] == employee[6] %}selected{% endif %}>
+                            {{ dept[1] }} ({{ dept[0] }})
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Update Employee</button>
+                    <a href="{{ url_for('employee_management.manage_employees') }}" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Projects List</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <table border="1" class="nav-table">
+        <tr>
+            <th><a href="/">Employees Overview</a></th>
+            <th><a href="{{ url_for('projects.sort_projects') }}">All Projects</a></th>
+            <th><a href="{{ url_for('employee_management.manage_employees') }}">Employee Management</a></th>
+            <th><a href="{{ url_for('managers.managers_overview') }}">Manager's Overview</a></th>
+            <th><a href="{{ url_for('managers.import_departments_form') }}">Import Departments</a></th>
+            <th>(Logged in as: {{ session.username }}) <a href="{{ url_for('auth.logout') }}">Logout</a></th>
+        </tr>
+    </table>
+
+    <h1>All Projects</h1>
+    <h3>Sort by:</h3>
+    <form method="post" id="sort_settings">
+        <select name="method" id="sort" required>
+            <option value="project_number" {% if selected_method == "project_number" %}selected{% endif %}>Project Number</option>
+            <option value="headcount" {% if selected_method == "headcount" %}selected{% endif %}>Headcount</option>
+            <option value="total_hours" {% if selected_method == "total_hours" %}selected{% endif %}>Total Hours</option>
+        </select>
+        <input type="radio" id="ASC" name="direction" value="ASC" required {% if selected_direction == "ASC" %}checked{% endif %}>
+        <label for "ASC">Ascending</label>
+        <input type="radio" id="DESC" name="direction" value="DESC" {% if selected_direction == "DESC" %}checked{% endif %}>
+        <label for "dec">Decending</label>
+        <input type="submit" value="Apply">
+    </form>
+    <hr>
+    <table border="1">
+        <tr>
+            <th>Project Number</th>
+            <th>Project Name</th>
+            <th>Owning Department</th>
+            <th>Headcount</th>
+            <th>Total Assigned Hours</th>
+        </tr>
+
+        {% for project in projects %}
+        <tr>
+            <td>{{project[0]}}</td>
+            <td>
+                <a class="project-name" href="{{ url_for('projects.project_detail', pnumber=project[0]) }}">
+                    {{ project[1] }}
+                </a>
+            </td>
+            <td>{{project[2]}}</td>
+            <td>{{project[3]}}</td>
+            <td>{{project[4]}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <button type="submit" form="sort_settings" formaction="{{ url_for('projects.download_projects', method=selected_method, direction=selected_direction) }}">
+        Download Projects CSV
+    </button>
+
+</body>
+</html>

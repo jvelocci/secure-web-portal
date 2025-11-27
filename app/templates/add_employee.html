@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %}Add Employee{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <h1>Add New Employee</h1>
+            
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ 'danger' if category == 'error' else 'success' }} alert-dismissible fade show">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert">
+                                <span>&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST" action="{{ url_for('employee_management.add_employee') }}">
+                <div class="form-group">
+                    <label for="ssn">SSN *</label>
+                    <input type="text" class="form-control" id="ssn" name="ssn" 
+                           pattern="[0-9]{9}" title="SSN must be 9 digits" required>
+                    <small class="form-text text-muted">9-digit Social Security Number</small>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="fname">First Name *</label>
+                        <input type="text" class="form-control" id="fname" name="fname" required>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="minit">Middle Initial *</label>
+                        <input type="text" class="form-control" id="minit" name="minit" maxlength="1">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="lname">Last Name *</label>
+                        <input type="text" class="form-control" id="lname" name="lname" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Address *</label>
+                    <input type="text" class="form-control" id="address" name="address" required>
+                </div>
+
+                <div>
+                    <label for="sex">Sex *</label>
+                    <select class="form-control" id="sex" name="sex" required>
+                        <option value="">Select a sex...</option>   
+                        <option value="M">Male</option>
+                        <option value="F">Female</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="salary">Salary *</label>
+                    <input type="number" class="form-control" id="salary" name="salary" 
+                           min="0" step="0.01" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="dno">Department *</label>
+                    <select class="form-control" id="dno" name="dno" required>
+                        <option value="">Select a department...</option>
+                        {% for dept in departments %}
+                        <option value="{{ dept[0] }}">{{ dept[1] }} ({{ dept[0] }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <label for="super_ssn">Supervisor SSN</label>
+                    <input type="text" class="form-control" id="super_ssn" name="super_ssn" 
+                           pattern="[0-9]{9}" title="SSN must be 9 digits">
+                    <small class="form-text text-muted">9-digit Social Security Number</small>
+                </div>
+                <div>
+                    <label for="birthdate">Birthdate</label><br>
+                    <input type="date" class="form-control" id="birthdate" name="birthdate">
+                </div>
+                <div>
+                    <label for="empdate">Employment Date</label><br>
+                    <input type="date" class="form-control" id="empdate" name="empdate">
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Add Employee</button>
+                    <a href="{{ url_for('employee_management.manage_employees') }}" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

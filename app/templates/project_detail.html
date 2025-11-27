@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <table border="1" class="nav-table">
+        <tr>
+            <th><a href="/">Employees Overview</a></th>
+            <th><a href="{{ url_for('projects.sort_projects') }}">All Projects</a></th>
+            <th><a href="{{ url_for('employee_management.manage_employees') }}">Employee Management</a></th>
+            <th><a href="{{ url_for('managers.managers_overview') }}">Manager's Overview</a></th>
+            <th><a href="{{ url_for('managers.import_departments_form') }}">Import Departments</a></th>
+            <th>(Logged in as: {{ session.username }}) <a href="{{ url_for('auth.logout') }}">Logout</a></th>
+        </tr>
+    </table>
+    <h1>Project {{pnumber}} Details:</h1>
+    <table border="1">
+        <tr>
+            <th>Full Name</th>
+            <th> Hours </th>
+        </tr>
+        {% if details %}
+        {% for row in details %}
+        <tr>
+            <td>{{row[0]}} {{row[1]}}. {{row[2]}}</td>
+            <td>{{row[3]}}</td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <p><strong>No employees working on project {{pnumber}}</strong></p>
+        {%endif%}
+
+    </table>
+    <br><hr>
+
+    <h3>Employee Upsert Form</h3>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <p style="color: red;">
+                {{ messages[0] }}
+            </p>
+        {% endif %}
+    {% endwith %}
+
+    <form method="POST">
+        <label for="employee">Select an employee:</label>
+        <select name="employee" id="employee" required>
+            <option value="" disabled selected hidden>Select an employee...</option>
+            {% for employee in employees %}
+                <option value="{{ employee[0] }}">{{employee[1]}} {{employee[2]}}. {{employee[3]}}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <label for="hours">Enter number of hours to add: </label>
+        <input type="number" name="hours" id="hours" step="0.1" min="0" max="999.9" required>
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+
+</body>
+</html>

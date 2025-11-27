@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Managers Overview{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Managers Overview</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ 'danger' if category == 'error' else 'success' }} alert-dismissible fade show">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert">
+                        <span>&times;</span>
+                    </button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Department Name & Number</th>
+                    <th>Manager's Name</th>
+                    <th>Employee Count</th>
+                    <th>Total Hours</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for dept in departments %}
+                <tr>
+                    <td>{{ dept[0] }} ({{ dept[1] }})</td>
+                    <td>{{ dept[2] }}</td>
+                    <td>{{ dept[3] }}</td>
+                    <td>{{ dept[4] }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4" class="text-center">No departments found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,154 @@
+body {
+    background-color: #faf1e3;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    color: #222;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #003e85;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    }
+h1{
+    font-size: 36px;
+    border-bottom: 2px solid #ccc;
+}
+
+p {
+    color: #ff3333;
+    font-size: 18px;
+}
+
+form {
+    width: fit-content;
+    margin: 20px auto;
+    padding: 12px;
+    box-sizing: border-box;
+}
+
+label {
+    display: inline-block;
+    margin-bottom: 8px;
+    margin-top: 8px;
+    font-weight: 600;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+textarea,
+select {
+    padding: 12px;
+    border-radius: 8px;
+    border: 2px solid #d0d7de;
+    font-size: 15px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+select {
+    appearance: none;
+    padding-right: 36px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23333' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 12px 8px;
+    min-width: 220px;
+}
+
+input[type="submit"],
+button[type="submit"],
+button:not(.delete),
+input[type="button"] {
+    background-color: #00c853;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    display: block; 
+    margin: 20px auto 0 auto;
+}
+
+table {
+    margin: 20px auto;
+    border-spacing: 0;
+    border-radius: 12px; 
+    overflow: hidden;    
+    width: auto;
+}
+
+table:not(.nav-table) {
+    border-collapse: separate;
+    border: 3px solid #444;
+}
+
+table:not(.nav-table) th {
+    background-color: #6758ac; 
+    color: white;
+    padding: 12px 16px;
+    border-bottom: 3px solid #444;
+    border-right: 2px solid #333;
+    font-weight: bold;
+    text-align: left;
+}
+
+table:not(.nav-table) td {
+    padding: 12px 16px;
+    border-right: 2px solid #333;
+    border-bottom: 2px solid #bbb;
+    background: white;
+}
+
+table:not(.nav-table) th:last-child,
+table:not(.nav-table) td:last-child {
+    border-right: none;
+}
+
+table:not(.nav-table) tr:hover td {
+    background-color: #fff6e6;
+}
+
+.nav-table {
+    width: 100%;
+    margin-bottom: 25px;
+    background-color: #6758ac; 
+}
+
+.nav-table th {
+    padding: 14px 20px;
+    text-align: center;
+    color:rgb(188, 228, 231);
+}
+
+.nav-table a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.nav-table a:hover {
+    text-decoration: underline;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+button.delete{
+    background-color: #ff3b3b;
+}
+
+a.project-name {
+    color:blue;
+    text-decoration: underline;
+    
+}

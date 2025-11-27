@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+    <title>Employees Overview</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <table border="1" class="nav-table">
+        <tr>
+            <th><a href="/">Employees Overview</a></th>
+            <th><a href="{{ url_for('projects.sort_projects') }}">All Projects</a></th>
+            <th><a href="{{ url_for('employee_management.manage_employees') }}">Employee Management</a></th>
+            <th><a href="{{ url_for('managers.managers_overview') }}">Manager's Overview</a></th>
+            <th><a href="{{ url_for('managers.import_departments_form') }}">Import Departments</a></th>
+            <th>(Logged in as: {{ session.username }}) <a href="{{ url_for('auth.logout') }}">Logout</a></th>
+        </tr>
+    </table>
+    <h1>Employees Overview</h1>
+
+    <h3>Filters</h3>
+    <form method="get">
+        <label>
+            Name contains:
+            <input type="text" name="name" value="{{ current_name }}">
+        </label>
+
+        <label>
+            Department:
+            <select name="department">
+                <option value="">All</option>
+                {% for d in departments %}
+                    {# d[0] = Dnumber, d[1] = Dname #}
+                    <option value="{{ d[0] }}" {% if current_dept == d[0]|string %}selected{% endif %}>
+                        {{ d[1] }}
+                    </option>
+                {% endfor %}
+            </select>
+        </label>
+
+        <label>
+            Sort by:
+            <select name="sort">
+                <option value="name_asc"  {% if current_sort == 'name_asc' %}selected{% endif %}>Name ↑</option>
+                <option value="name_desc" {% if current_sort == 'name_desc' %}selected{% endif %}>Name ↓</option>
+                <option value="hours_asc" {% if current_sort == 'hours_asc' %}selected{% endif %}>Total Hours ↑</option>
+                <option value="hours_desc"{% if current_sort == 'hours_desc' %}selected{% endif %}>Total Hours ↓</option>
+            </select>
+        </label>
+
+        <button type="submit">Apply</button>
+    </form>
+
+    <h3>Employees</h3>
+    <table border="1" cellpadding="4" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Full Name</th>
+                <th>Department</th>
+                <th># Dependents</th>
+                <th># Projects</th>
+                <th>Total Hours</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for e in employees %}
+                {# e = (Ssn, full_name, department_name, num_dependents, num_projects, total_hours) #}
+                <tr>
+                    <td>{{ e[1] }}</td>
+                    <td>{{ e[2] }}</td>
+                    <td>{{ e[3] }}</td>
+                    <td>{{ e[4] }}</td>
+                    <td>{{ e[5] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

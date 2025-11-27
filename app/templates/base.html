@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <table border="1" class="nav-table">
+        <tr>
+            <th><a href="/">Employees Overview</a></th>
+            <th><a href="{{ url_for('projects.sort_projects') }}">All Projects</a></th>
+            <th><a href="{{ url_for('employee_management.manage_employees') }}">Employee Management</a></th>
+            <th><a href="{{ url_for('managers.managers_overview') }}">Manager's Overview</a></th>
+            <th><a href="{{ url_for('managers.import_departments_form') }}">Import Departments</a></th>
+            <th>(Logged in as: {{ session.username }}) <a href="{{ url_for('auth.logout') }}">Logout</a></th>
+        </tr>
+    </table>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>
