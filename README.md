@@ -18,8 +18,7 @@ Originally built as a group project for a Database Systems course; this repo has
 been cleaned up and re-uploaded to showcase my contributions.
 
 **My contributions:**
-- Explained and helped with the implement the role-based access control system, including session management 
-  and password hashing
+- Explained the role-based access control design to my teammate and helped implement it, including session management and password hashing
 - Wrote parameterized queries and input whitelisting used to prevent SQL injection
 - Designed the atomic transaction logic (upsert-based) and several of the more 
   complex SQL aggregation queries
